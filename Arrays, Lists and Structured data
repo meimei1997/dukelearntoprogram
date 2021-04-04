@@ -1,0 +1,47 @@
+import edu.duke.*;
+
+public class WordLengths {
+    public void countWordLengths(FileResource resource, int[] counts){
+        for(String word : resource.words()){
+            word = word.toLowerCase();
+            int wordLength = word.length();
+            if(Character.isLetter(word.charAt(word.length()-1)) == false) 
+            {
+                wordLength --;
+            }
+            if(wordLength >= counts.length)
+            {
+                wordLength = counts.length -1;
+            }
+            if(wordLength > 0)
+            {
+                counts[wordLength]++;
+            }
+        }
+    }
+    
+    public int indexOfMax(int[] values){
+        int indexOfMax = 0;
+        int maxSoFar = values[0];        
+        for (int i=1;i<values.length;i++){
+            if (values[i]>maxSoFar) {
+                maxSoFar = values[i];
+                indexOfMax = i;
+            }
+        } 
+        return indexOfMax;
+    }
+    
+    public void testCountWordLengths(){
+        FileResource resource = new FileResource();
+        int[] counts = new int[31];
+        countWordLengths(resource,counts);
+        for(int k=0; k<31; k++){
+            if(counts[k]!=0)
+            {
+                System.out.println(counts[k]+" word(s) of length "+k);
+            }
+        }
+        System.out.println("the most common word length appears " + indexOfMax(counts)+" times");
+    }
+}
